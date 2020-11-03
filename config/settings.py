@@ -40,7 +40,15 @@ DJANGO_APPS = [
 ]
 
 CUSTOM_APPS = [
+    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
+    "rooms.apps.RoomsConfig",
+    "airplanes.apps.AirplanesConfig",
+    "reviews.apps.ReviewsConfig",
+]
+
+API_APPS = [
+    "django_countries",
 ]
 
 
