@@ -4,6 +4,8 @@ from . import models
 # Register your models here.
 
 
-@admin.register(models.Airplanes)
+@admin.register(models.Airplane)
 class AirplaneAdmin(admin.ModelAdmin):
+    """ airplane admin """
+
     pass

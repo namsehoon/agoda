@@ -1,10 +1,10 @@
 from django.db import models
 from core import models as core_model
 from django_countries.fields import CountryField
-from django.utils import timezone
+from datetime import datetime
 
 
-class Airplanes(core_model.TimeStampModel):
+class Airplane(core_model.TimeStampModel):
 
     """ airplanes model """
 
@@ -39,21 +39,25 @@ class Airplanes(core_model.TimeStampModel):
     )
 
     # 편도, 왕복
-    name = models.CharField(max_length=50, null=True, choices=WAY_CHOICES)
+    ticket = models.CharField(max_length=50, null=True, choices=WAY_CHOICES)
     # 출발지, 목적지, 항공사
     starting_point = CountryField()
     destination = CountryField()
     flight_name = models.CharField(max_length=50, null=True, choices=FLIGHT_CHOICES)
     # 출국일, 귀국일, 시간대
     # TODO-------------------------------
-    _departure = models.TimeField(default=date.today)
-    _return = models.TimeField(default=date.today)
-    take_time = models.TimeField(default=date.today)
+    _departure = models.DateField(default="", null=True)
+    _return = models.DateField(default="", null=True)
     # TODO-------------------------------
     # 인원
-    adult = models.IntegerField(default=0)
-    children = models.IntegerField(default=0)
+    adult = models.IntegerField()
+    children = models.IntegerField()
     # 좌석 클래스
     flight_class = models.CharField(max_length=30, blank=True, choices=CLASS_CHOICES)
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        "users.User", related_name="airplanes", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.starting_point.name} to {self.destination.name}"
