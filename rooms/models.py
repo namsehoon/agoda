@@ -61,7 +61,7 @@ class Photo(AbstractItem):
 
     caption = models.CharField(max_length=50)
     file = models.ImageField()
-    room = models.ForeignKey("Room", on_delete=models.CASCADE)
+    room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
@@ -82,7 +82,7 @@ class Room(core_model.TimeStampModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    # foreign key인 host(user)가 room을 가르키니 namesehoon.room_set으로 접근할 수 있다.
+    # foreign key인 host(user)가 room을 가르키니 namesehoon.room_set으로 user(host)에 접근할 수 있다.
     host = models.ForeignKey(
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )

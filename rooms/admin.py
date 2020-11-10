@@ -6,6 +6,11 @@ from . import models
 class ItemAdmin(admin.ModelAdmin):
     pass
 
+    list_display = ("name", "used_by")
+
+    def used_by(self, obj):
+        return obj.rooms.count()
+
 
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
@@ -63,7 +68,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_out",
         "instant_book",
         "count_amenities",
-        "count_facilities",
+        "count_photos",
     )
 
     # 어드민 (밖)에서 옵셔널하게 걸러주는 필터 말그대로 ㅅ ㅋㅋㅋ
@@ -91,8 +96,8 @@ class RoomAdmin(admin.ModelAdmin):
     def count_amenities(self, obj):
         return obj.amenities.count()
 
-    def count_facilities(self, obj):
-        return "pan"
+    def count_photos(self, obj):
+        return obj.photos.count()
 
 
 @admin.register(models.Photo)
