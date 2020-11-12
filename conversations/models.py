@@ -9,7 +9,10 @@ class Conversation(core_model.TimeStampModel):
     participants = models.ManyToManyField("users.User", blank=True)
 
     def __str__(self):
-        return str(self.created)
+        username = []
+        for user in self.participants.all():
+            username.append(user.username)
+        return " , ".join(username)
 
 
 class Message(core_model.TimeStampModel):

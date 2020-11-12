@@ -55,9 +55,12 @@ class Airplane(core_model.TimeStampModel):
     # 좌석 클래스
     flight_class = models.CharField(max_length=30, blank=True, choices=CLASS_CHOICES)
 
-    user = models.ForeignKey(
-        "users.User", related_name="airplanes", on_delete=models.CASCADE
-    )
+    user = models.ManyToManyField("users.User", related_name="airplanes", blank=True)
 
     def __str__(self):
         return f"{self.starting_point.name} to {self.destination.name}"
+
+    def user_count(self):
+        return self.user.count()
+
+    user_count.short_description = "Count"

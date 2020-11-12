@@ -7,7 +7,7 @@ class ConversationAdmin(admin.ModelAdmin):
 
     """ conversation admin """
 
-    pass
+    filter_horizontal = ("participants",)
 
 
 @admin.register(models.Message)
@@ -15,4 +15,4 @@ class MessageAdmin(admin.ModelAdmin):
 
     """ message admin """
 
-    pass
+    list_display = ("__str__", "created")

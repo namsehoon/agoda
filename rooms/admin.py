@@ -69,6 +69,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "count_amenities",
         "count_photos",
+        "total_rating",
     )
 
     # 어드민 (밖)에서 옵셔널하게 걸러주는 필터 말그대로 ㅅ ㅋㅋㅋ

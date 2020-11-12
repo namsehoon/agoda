@@ -29,3 +29,16 @@ class Review(core_model.TimeStampModel):
 
     def __str__(self):
         return f"{self.room.name} - {self.review}"
+
+    def review_average(self):
+        avg = (
+            self.cleanliness
+            + self.ancillary
+            + self.location
+            + self.service
+            + self.satisfaction
+        ) / 5
+
+        return round(avg, 2)
+
+    review_average.short_description = "AVG."

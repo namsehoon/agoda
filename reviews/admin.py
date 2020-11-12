@@ -6,4 +6,7 @@ from . import models
 class ReviewAdmin(admin.ModelAdmin):
     """ review admin """
 
-    pass
+    list_display = (
+        "__str__",
+        "review_average",
+    )

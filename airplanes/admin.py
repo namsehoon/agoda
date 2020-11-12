@@ -8,4 +8,10 @@ from . import models
 class AirplaneAdmin(admin.ModelAdmin):
     """ airplane admin """
 
-    pass
+    list_display = (
+        "__str__",
+        "flight_class",
+        "user_count",
+    )
+
+    filter_horizontal = ("user",)
