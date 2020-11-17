@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.utils.safestring import mark_safe
 
 
 @admin.register(models.RoomType, models.Facility, models.Amenity, models.HouseRule)
@@ -12,9 +13,19 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
+# 룸에서 사진을 변경할 수 있음.
+class photo_inline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     """ room admin """
+
+    inlines = [
+        photo_inline,
+    ]
 
     # 커스텀 필드 세팅 (안)
     fieldsets = (
@@ -94,6 +105,9 @@ class RoomAdmin(admin.ModelAdmin):
         "houserule",
     )
 
+    # 많은 유저들을 운영할때 보기 쉽고, 간편하게 관리를 하기위해 외래키를 숫자로 준다.
+    raw_id_fields = ("host",)
+
     def count_amenities(self, obj):
         return obj.amenities.count()
 
@@ -103,4 +117,13 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    pass
+    """photo admin """
+
+    list_display = (
+        "__str__",
+        "photos_thumnail",
+    )
+
+    def photos_thumnail(self, obj):
+
+        return mark_safe(f"<img width=50px src='{obj.file.url}'></img>")

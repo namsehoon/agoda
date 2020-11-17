@@ -59,12 +59,11 @@ class Photo(AbstractItem):
 
     """ photo model"""
 
-    caption = models.CharField(max_length=50)
     file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.caption
+        return self.description
 
 
 class Room(core_model.TimeStampModel):

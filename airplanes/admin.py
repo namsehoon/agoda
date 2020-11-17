@@ -13,5 +13,3 @@ class AirplaneAdmin(admin.ModelAdmin):
         "flight_class",
         "user_count",
     )
-
-    filter_horizontal = ("user",)
