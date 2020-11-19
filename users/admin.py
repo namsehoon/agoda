@@ -45,4 +45,10 @@ class MyUserAdmin(UserAdmin):
         "last_name",
         "email",
         "superhost",
+        "airplain_users",
     )
+
+    def airplain_users(self, obj):
+        return obj.airplanes.count()
+
+    airplain_users.short_description = "Tickets"

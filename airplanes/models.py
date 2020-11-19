@@ -1,7 +1,6 @@
 from django.db import models
 from core import models as core_model
 from django_countries.fields import CountryField
-from datetime import datetime
 
 
 class Airplane(core_model.TimeStampModel):
@@ -54,14 +53,9 @@ class Airplane(core_model.TimeStampModel):
     children = models.IntegerField()
     # 좌석 클래스
     flight_class = models.CharField(max_length=30, blank=True, choices=CLASS_CHOICES)
-    user = models.ForeignKey(
-        "users.User", related_name="airplanes", on_delete=models.CASCADE, blank=True
+    users = models.ForeignKey(
+        "users.User", related_name="airplanes", on_delete=models.CASCADE
     )
 
     def __str__(self):
         return f"{self.starting_point.name} to {self.destination.name}"
-
-    def user_count(self):
-        return self.user.count()
-
-    user_count.short_description = "Count"

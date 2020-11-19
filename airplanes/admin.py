@@ -11,5 +11,8 @@ class AirplaneAdmin(admin.ModelAdmin):
     list_display = (
         "__str__",
         "flight_class",
-        "user_count",
+        "reservation_name",
     )
+
+    def reservation_name(self, obj):
+        return obj.users.username
