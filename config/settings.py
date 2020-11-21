@@ -52,6 +52,7 @@ CUSTOM_APPS = [
 
 API_APPS = [
     "django_countries",
+    "django_seed",
 ]
 
 
