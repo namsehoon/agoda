@@ -22,6 +22,9 @@ class Command(BaseCommand):
         # 데이터베이스가 큰 경우에는 all로 가져오면 안되.
         users = User.objects.all()
         room_type = room_model.RoomType.objects.all()
+        amenities = room_model.Amenity.objects.all()
+        facilities = room_model.Facility.objects.all()
+        houseRule = room_model.HouseRule.objects.all()
         seeder.add_entity(
             room_model.Room,
             numbers,
@@ -42,10 +45,24 @@ class Command(BaseCommand):
         for pk in create_rooms:
             room = room_model.Room.objects.get(pk=pk)
             for i in range(3, random.randint(8, 10)):
+                # 외래키 관계
                 room_model.Photo.objects.create(
                     file=f"/room_photos/{random.randint(1,39)}.jpeg",
                     room=room,
                     description=seeder.faker.sentence(),
                 )
+            # 다대다관계
+            for a in amenities:
+                number = random.randint(1, 10)
+                if number % 2 != 0:
+                    room.amenities.add(a)
+            for f in facilities:
+                number = random.randint(1, 10)
+                if number % 2 != 0:
+                    room.facilities.add(f)
+            for h in houseRule:
+                number = random.randint(1, 10)
+                if number % 2 != 0:
+                    room.houseRule.add(h)
 
         self.stdout.write(self.style.SUCCESS(f"{numbers} rooms created!"))
